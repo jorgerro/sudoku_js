@@ -10,26 +10,64 @@
     
     <style>
 
-        html, body, ul, li {
+        html, body, ul, li, div {
           margin: 0;
           padding: 0;
           border: 0;
+          font: inherit;
+          vertical-align: baseline;
+          font-size: 100%;
+        }
+        
+        body {
+          background-color: #f7f7f7;
+          font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+          color: #5a5a5a;
+          line-height: normal;
         }
 
         ul {
-          margin: 100px auto;
+          margin: 35px auto 0 auto;
           list-style: none;
-          width: 333px;
-          border: 2px solid black;
+          width: 423px;
+          border: 1px solid black;
           padding: 0;
         }
+        
+        div {
+            border: 2px solid #000;
+            width: 111px;
+            display: inline-block;
+        }
+        
+        div.grey li {
+            background-color: #ccc;
+        }
+        
+        ul.board {
+            margin-top: 40px;
+            width: 333px;
+        }
 
-        li {
+        ul li {
           height: 35px;
           width: 35px;
-          background: white;
+          background-color: #407F7F;
           border: 1px solid black;
           float: left;
+          color: #fff;
+          text-shadow: 1px 1px 2px black, 0 0 1em #000, 0 0 0.2em #000;
+          text-align: center;
+          font-size: 18px;
+          padding: 12px 5px 0 5px;
+        }
+        
+        ul.board li {
+            padding: 0;
+        }
+        
+        .highlight {
+            background-color: #669999;
         }
 
         .clearfix:after {
@@ -52,9 +90,56 @@
             var Sudoku = root.Sudoku = (root.Sudoku || {});
 
             var Game = Sudoku.Game = function () {
-               // game constuctor
+               this.selectedNumber = null;
                this.board = constructBoard();
             }
+            
+            var GROUPS = Sudoku.GROUPS = {
+                
+                0: [[0,0], [0,1], [0,2], 
+                    [1,0], [1,1], [1,2],
+                    [2,0], [2,1], [2,2]],
+                
+                1: [[0,3], [0,4], [0,5], 
+                    [1,3], [1,4], [1,5],
+                    [2,3], [2,4], [2,5]], 
+                
+                2: [[0,6], [0,7], [0,8], 
+                    [1,6], [1,7], [1,8],
+                    [2,6], [2,7], [2,8]],
+                    
+                3: [[3,0], [3,1], [3,2], 
+                    [4,0], [4,1], [4,2],
+                    [5,0], [5,1], [5,2]],
+                    
+                4: [[3,3], [3,4], [3,5], 
+                    [4,3], [4,4], [4,5],
+                    [5,3], [5,4], [5,5]], 
+                    
+                5: [[3,6], [3,7], [3,8], 
+                    [4,6], [4,7], [4,8],
+                    [5,6], [5,7], [5,8]],
+                    
+                6: [[6,0], [6,1], [6,2], 
+                    [7,0], [7,1], [7,2],
+                    [8,0], [8,1], [8,2]],
+                    
+                7: [[6,3], [6,4], [6,5], 
+                    [7,3], [7,4], [7,5],
+                    [8,3], [8,4], [8,5]], 
+                    
+                8: [[6,6], [6,7], [6,8], 
+                    [7,6], [7,7], [7,8],
+                    [8,6], [8,7], [8,8]]
+                    
+            }
+            
+            var GROUP_MAPPER = Sudoku.GROUP_MAPPER = [
+                 "0,0", "0,1","0,2",
+                 "1,0", "1,1","1,2",
+                 "2,0", "2,1","2,2"
+                
+            ]
 
             var constructBoard = Sudoku.constructBoard = function constructBoard() {
              return _.times(9, function (i) {
@@ -64,17 +149,131 @@
              });
             };
             
+            // var groupIncludes = Sudoku.groupIncludes = function groupIncludes(group, pos) {
+            //     group.forEach(function (groupPos) {
+            //         if ( groupPos[0] === pos[0] && groupPos[1] === pos[1] ) {
+            //             return true;
+            //         }
+            //     });
+            // }
+            
+            var findGroupNumber = Sudoku.findGroupNumber = function findGroupNumber(pos) {
+                
+                // assuming group 0 is at the top left-hand corner and group 8 is at the bottom right-hand corner
+                // The groupKey's index in the groupMapper array will correspond to its group number
+                
+                var groupKey = [Math.floor(pos[0] / 3), Math.floor(pos[1] / 3)];
+                var groupKeyString = groupKey.toString();
+                return GROUP_MAPPER.indexOf(groupKeyString);
+            };
+            
+            Game.prototype.setSelectedNumber = function (num) {
+                this.selectedNumber = num;
+            }
+            
+            Game.prototype.isEmptyPos = function (pos) {
+              return (this.board[pos[0]][pos[1]] === null);
+            };
+            
+            Game.prototype.getValue = function (pos) {
+              return this.board[pos[0]][pos[1]];
+            };
+            
+            Game.prototype.placeNumber = function (pos) {
+              this.board[pos[0]][pos[1]] = this.selectedNumber;
+            };
+            
+            Game.prototype.checkColumn = function (pos, num) {
+
+                var self = this;
+                var i = pos[0];
+                // var indices = _.range(0, 10);
+                // var columnValues = [];
+                //
+                // indices.forEach(function (j) {
+                //     columnValues.push(self.board[i][j])
+                // })
+                
+                var columnValues = _.times(9, function (j) {
+                    return self.board[i][j];
+                });
+                
+                return (columnValues.indexOf(num) === -1);
+            };
+            
+            Game.prototype.checkRow = function (pos, num) {
+
+                var self = this;
+                var j = pos[1];
+                // var indices = _.range(0, 10);
+                // var rowValues = [];
+                //
+                // indices.forEach(function (i) {
+                //     rowValues.push(self.board[i][j])
+                // })
+                
+                var rowValues = _.times(9, function (i) {
+                    return self.board[i][j];
+                });
+                
+                return (rowValues.indexOf(num) === -1);
+            };
+            
+            Game.prototype.checkGroup = function (pos, num) {
+
+                var self = this;
+                var groupNumber = findGroupNumber(pos);
+                var coordinates = GROUPS[groupNumber];
+                var groupValues = [];
+                
+                coordinates.forEach(function (coord) {
+                    groupValues.push(self.getValue(coord));
+                })
+                
+                return (groupValues.indexOf(num) === -1);
+            };
+            
+            Game.prototype.isValid = function (pos, num) {
+                
+                if ( this.checkRow(pos, num) && this.checkColumn(pos, num) && this.checkGroup(pos, num) ) {
+                    return true;
+                }
+                return false;
+            };
             
             
-        
     
             
         })(this);
         
+    </script>
+    
+    <script type="text/javascript">
     
         $(document).ready(function () {
-           
             
+            
+            $selectorElements = $('ul.clearfix.selector');
+            
+            $('ul.clearfix.board').on('click', 'li', function (event) {
+              
+              $(event.currentTarget).html(game.selectedNumber)
+              
+              var coord = eval($(this).attr('id'))
+              game.placeNumber(coord)
+            });
+            
+            $selectorElements.on('click', 'li', function (event) {
+                $('ul.clearfix.selector li').removeClass('highlight')
+                $(event.currentTarget).addClass('highlight')
+                
+                var selectedNumber = eval($(this).attr('id'))
+                game.setSelectedNumber(selectedNumber)
+            });
+            
+            var game = new Sudoku.Game();
+            console.log(Sudoku.findGroupNumber([0,0]));
+           
         });
       
     </script>
@@ -84,37 +283,58 @@
     
     <h3>Uber Front-end Web Test</h3>
     
-    <ul class="clearfix">
+    
+    <ul class="clearfix selector">
         
-      <li id="[0,0]"></li>
-      <li id="[0,1]"></li>
-      <li id="[0,2]"></li>
-      <li id="[0,3]"></li>
-      <li id="[0,4]"></li>
-      <li id="[0,5]"></li>
-      <li id="[0,6]"></li>
-      <li id="[0,7]"></li>
-      <li id="[0,8]"></li>
+        <li id="1">1</li>
+        <li id="2">2</li>
+        <li id="3">3</li>
+        <li id="4">4</li>
+        <li id="5">5</li>
+        <li id="6">6</li>
+        <li id="7">7</li>
+        <li id="8">8</li>
+        <li id="9">9</li>
 
-      <li id="[1,0]"></li>
-      <li id="[1,1]"></li>
-      <li id="[1,2]"></li>
-      <li id="[1,3]"></li>
-      <li id="[1,4]"></li>
-      <li id="[1,5]"></li>
-      <li id="[1,6]"></li>
-      <li id="[1,7]"></li>
-      <li id="[1,8]"></li>
+    </ul>
+    
+    <ul class="clearfix board">
+        
+        <!-- <div class="clearfix"> -->
+            <li id="[0,0]"></li>
+            <li id="[0,1]"></li>
+            <li id="[0,2]"></li>
+            <li id="[0,3]"></li>
+            <li id="[0,4]"></li>
+            <li id="[0,5]"></li>
+            <li id="[0,6]"></li>
+            <li id="[0,7]"></li>
+            <li id="[0,8]"></li>
+        <!-- </div> -->
 
-      <li id="[2,0]"></li>
-      <li id="[2,1]"></li>
-      <li id="[2,2]"></li>
-      <li id="[2,3]"></li>
-      <li id="[2,4]"></li>
-      <li id="[2,5]"></li>
-      <li id="[2,6]"></li>
-      <li id="[2,7]"></li>
-      <li id="[2,8]"></li>
+        <!-- <div class="clearfix grey"> -->
+            <li id="[1,0]"></li>
+            <li id="[1,1]"></li>
+            <li id="[1,2]"></li>
+            <li id="[1,3]"></li>
+            <li id="[1,4]"></li>
+            <li id="[1,5]"></li>
+            <li id="[1,6]"></li>
+            <li id="[1,7]"></li>
+            <li id="[1,8]"></li>
+        <!-- </div> -->
+
+        <!-- <div class="clearfix"> -->
+            <li id="[2,0]"></li>
+            <li id="[2,1]"></li>
+            <li id="[2,2]"></li>
+            <li id="[2,3]"></li>
+            <li id="[2,4]"></li>
+            <li id="[2,5]"></li>
+            <li id="[2,6]"></li>
+            <li id="[2,7]"></li>
+            <li id="[2,8]"></li>
+        <!-- </div> -->
 
       <li id="[3,0]"></li>
       <li id="[3,1]"></li>
@@ -176,10 +396,7 @@
       <li id="[8,7]"></li>
       <li id="[8,8]"></li>
 
-    </ul>
-    
-    
-    
+    </ul>    
     
 
     
