@@ -230,6 +230,15 @@
                 return GROUP_MAPPER.indexOf(groupKeyString);
             };
             
+            Game.prototype.isWon = function () {
+                var flattenedArray = _.chain(this.board)
+                    .flatten()
+                    .compact()
+                    .value();
+                    
+                return flattenedArray.length === 81;
+            }
+            
             Game.prototype.setSelectedNumber = function (num) {
                 this.selectedNumber = num;
             }
@@ -244,6 +253,10 @@
             
             Game.prototype.placeNumber = function (pos) {
               this.board[pos[0]][pos[1]] = this.selectedNumber;
+              
+              if ( this.isWon ) {
+                  alert('You did it!')
+              }
             };
             
             Game.prototype.checkColumn = function (pos, num) {
@@ -290,8 +303,6 @@
                 return false;
             };
             
-            // function show
-            
             
         })(this);
         
@@ -331,7 +342,6 @@
                 
                 var coord = eval($(this).attr('id'));
                 var num = game.selectedNumber;
-                console.log(num)
                 
                 if ( !num ) {
                     $(event.currentTarget).html('');
@@ -347,6 +357,7 @@
             
             function renderInitialBoard(game) {
                 var init = game.initialBoard;
+                
                 for (var key in init) {
                     if ( init.hasOwnProperty(key)) {
                         var idString = '[id="[' + key + ']"]';
@@ -359,7 +370,6 @@
             
             function showXOver($el) {
                 
-                // $el = $('[id="[0,2]"]');
                 $spanX = $('<span>X</span>');
                 $el.append($spanX);
                 
@@ -367,7 +377,6 @@
                     this.remove();
                 })
             }
-            
             
         });
       
