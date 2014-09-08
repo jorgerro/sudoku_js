@@ -189,7 +189,7 @@
             // ]
             
             var Game = Sudoku.Game = function () {
-               this.selectedNumber = null;
+               this.selectedNumber = undefined;
                this.board = constructBoard();
                this.initialBoard = initialBoard;
             }
@@ -241,13 +241,6 @@
 
                 var self = this;
                 var i = pos[0];
-                // var indices = _.range(0, 10);
-                // var columnValues = [];
-                //
-                // indices.forEach(function (j) {
-                //     columnValues.push(self.board[i][j])
-                // })
-                
                 var columnValues = _.times(9, function (j) {
                     return self.board[i][j];
                 });
@@ -259,13 +252,6 @@
 
                 var self = this;
                 var j = pos[1];
-                // var indices = _.range(0, 10);
-                // var rowValues = [];
-                //
-                // indices.forEach(function (i) {
-                //     rowValues.push(self.board[i][j])
-                // })
-                
                 var rowValues = _.times(9, function (i) {
                     return self.board[i][j];
                 });
@@ -314,7 +300,13 @@
                 $('ul.clearfix.selector li').removeClass('highlight');
                 $(event.currentTarget).addClass('highlight');
                 
-                var selectedNumber = eval($(this).attr('id'));
+                var selectedNumber; 
+                try {
+                    selectedNumber = eval($(this).attr('id'));
+                } catch (e) { 
+                    // selectedNumber remains undefined
+                }
+                
                 game.setSelectedNumber(selectedNumber);
             });
             
@@ -325,11 +317,21 @@
                 if ( game.initialBoard[coordKey] ) {
                     return;
                 }
-
-                $(event.currentTarget).html(game.selectedNumber);
-
+                
                 var coord = eval($(this).attr('id'));
-                game.placeNumber(coord);
+                var num = game.selectedNumber;
+                console.log(num)
+                
+                if ( !num ) {
+                    $(event.currentTarget).html('');
+                    game.placeNumber(coord);
+                } else if ( game.isValid(coord, num) ) {
+                    $(event.currentTarget).html(num);
+                    game.placeNumber(coord);
+                } else {
+                    alert('nah son');
+                }
+
             });
             
             function renderInitialBoard(game) {
@@ -364,6 +366,7 @@
         <li id="7">7</li>
         <li id="8">8</li>
         <li id="9">9</li>
+        <li id="">E</li>
 
     </ul>
     
