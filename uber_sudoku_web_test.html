@@ -6,29 +6,74 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Uber Front-end Web Test</title>
     
-    <style type="text/css" media="screen"></style>
+    <style type="text/css" media="screen">
+    
+    <style>
+
+        html, body, ul, li {
+          margin: 0;
+          padding: 0;
+          border: 0;
+        }
+
+        ul {
+          margin: 100px auto;
+          list-style: none;
+          width: 333px;
+          border: 2px solid black;
+          padding: 0;
+        }
+
+        li {
+          height: 35px;
+          width: 35px;
+          background: white;
+          border: 1px solid black;
+          float: left;
+        }
+
+        .clearfix:after {
+          content: "";
+          display: block;
+          clear: both;
+        }
+
+    </style>
+    
+    </style>
     
     <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
     
     <script type="text/javascript">
     
         (function(root) {
             
-           var Sudoku = root.Sudoku = (root.Sudoku || {});
-            
-           var Game = Sudoku.Game = function () {
+            var Sudoku = root.Sudoku = (root.Sudoku || {});
+
+            var Game = Sudoku.Game = function () {
                // game constuctor
                this.board = constructBoard();
-           }
+            }
+
+            var constructBoard = Sudoku.constructBoard = function constructBoard() {
+             return _.times(9, function (i) {
+               return _.times(9, function (j) {
+                 return null;
+               });
+             });
+            };
             
+            
+            
+        
+    
             
         })(this);
         
-        
-        
-    
     
         $(document).ready(function () {
+           
             
         });
       
@@ -39,18 +84,98 @@
     
     <h3>Uber Front-end Web Test</h3>
     
-    <ul class="group">
+    <ul class="clearfix">
+        
       <li id="[0,0]"></li>
       <li id="[0,1]"></li>
       <li id="[0,2]"></li>
+      <li id="[0,3]"></li>
+      <li id="[0,4]"></li>
+      <li id="[0,5]"></li>
+      <li id="[0,6]"></li>
+      <li id="[0,7]"></li>
+      <li id="[0,8]"></li>
 
       <li id="[1,0]"></li>
       <li id="[1,1]"></li>
       <li id="[1,2]"></li>
+      <li id="[1,3]"></li>
+      <li id="[1,4]"></li>
+      <li id="[1,5]"></li>
+      <li id="[1,6]"></li>
+      <li id="[1,7]"></li>
+      <li id="[1,8]"></li>
 
       <li id="[2,0]"></li>
       <li id="[2,1]"></li>
       <li id="[2,2]"></li>
+      <li id="[2,3]"></li>
+      <li id="[2,4]"></li>
+      <li id="[2,5]"></li>
+      <li id="[2,6]"></li>
+      <li id="[2,7]"></li>
+      <li id="[2,8]"></li>
+
+      <li id="[3,0]"></li>
+      <li id="[3,1]"></li>
+      <li id="[3,2]"></li>
+      <li id="[3,3]"></li>
+      <li id="[3,4]"></li>
+      <li id="[3,5]"></li>
+      <li id="[3,6]"></li>
+      <li id="[3,7]"></li>
+      <li id="[3,8]"></li>
+
+      <li id="[4,0]"></li>
+      <li id="[4,1]"></li>
+      <li id="[4,2]"></li>
+      <li id="[4,3]"></li>
+      <li id="[4,4]"></li>
+      <li id="[4,5]"></li>
+      <li id="[4,6]"></li>
+      <li id="[4,7]"></li>
+      <li id="[4,8]"></li>
+      
+      <li id="[5,0]"></li>
+      <li id="[5,1]"></li>
+      <li id="[5,2]"></li>
+      <li id="[5,3]"></li>
+      <li id="[5,4]"></li>
+      <li id="[5,5]"></li>
+      <li id="[5,6]"></li>
+      <li id="[5,7]"></li>
+      <li id="[5,8]"></li>
+
+      <li id="[6,0]"></li>
+      <li id="[6,1]"></li>
+      <li id="[6,2]"></li>
+      <li id="[6,3]"></li>
+      <li id="[6,4]"></li>
+      <li id="[6,5]"></li>
+      <li id="[6,6]"></li>
+      <li id="[6,7]"></li>
+      <li id="[6,8]"></li>
+
+      <li id="[7,0]"></li>
+      <li id="[7,1]"></li>
+      <li id="[7,2]"></li>
+      <li id="[7,3]"></li>
+      <li id="[7,4]"></li>
+      <li id="[7,5]"></li>
+      <li id="[7,6]"></li>
+      <li id="[7,7]"></li>
+      <li id="[7,8]"></li>
+
+      <li id="[8,0]"></li>
+      <li id="[8,1]"></li>
+      <li id="[8,2]"></li>
+      <li id="[8,3]"></li>
+      <li id="[8,4]"></li>
+      <li id="[8,5]"></li>
+      <li id="[8,6]"></li>
+      <li id="[8,7]"></li>
+      <li id="[8,8]"></li>
+
     </ul>
     
     
