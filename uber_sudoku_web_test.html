@@ -10,7 +10,7 @@
     
     <style>
 
-        html, body, ul, li, div {
+        html, body, ul, li, div, span {
           margin: 0;
           padding: 0;
           border: 0;
@@ -35,7 +35,7 @@
         ul {
           margin: 35px auto 0 auto;
           list-style: none;
-          width: 423px;
+          width: 470px;
           border: 1px solid black;
           padding: 0;
         }
@@ -43,7 +43,8 @@
         div {
             border: 2px solid #000;
             width: 111px;
-            display: inline-block;
+            display: block;
+            float: left;
         }
         
         div.grey li {
@@ -52,7 +53,7 @@
         
         ul.board {
             margin-top: 40px;
-            width: 333px;
+            width: 345px;
         }
 
         ul li {
@@ -69,6 +70,7 @@
         }
         
         ul.board li {
+            position: relative;
             padding: 0;
         }
         
@@ -78,6 +80,13 @@
         
         .initial-board {
             color: #D46A6A;
+        }
+        
+        span {
+            z-index: 100;
+            position: absolute;
+            top: 5px;
+            left: 12px;
         }
 
     </style>
@@ -281,6 +290,8 @@
                 return false;
             };
             
+            // function show
+            
             
         })(this);
         
@@ -329,7 +340,7 @@
                     $(event.currentTarget).html(num);
                     game.placeNumber(coord);
                 } else {
-                    alert('nah son');
+                    showXOver($(event.currentTarget));
                 }
 
             });
@@ -338,13 +349,25 @@
                 var init = game.initialBoard;
                 for (var key in init) {
                     if ( init.hasOwnProperty(key)) {
-                        var idString = '[' + key + ']';
-                        var el = document.getElementById(idString)
-                        el.innerHTML = init[key];
-                        el.className = el.className + " initial-board"
+                        var idString = '[id="[' + key + ']"]';
+                        var $el = $(idString);
+                        $el.html(init[key]);
+                        $el.addClass("initial-board");
                     }
                 }
             };
+            
+            function showXOver($el) {
+                
+                // $el = $('[id="[0,2]"]');
+                $spanX = $('<span>X</span>');
+                $el.append($spanX);
+                
+                $spanX.fadeOut(750, function (){
+                    this.remove();
+                })
+            }
+            
             
         });
       
@@ -372,7 +395,7 @@
     
     <ul class="clearfix board">
         
-        <!-- <div class="clearfix"> -->
+        <div class="clearfix">
             <li id="[0,0]"></li>
             <li id="[0,1]"></li>
             <li id="[0,2]"></li>
@@ -382,9 +405,9 @@
             <li id="[0,6]"></li>
             <li id="[0,7]"></li>
             <li id="[0,8]"></li>
-        <!-- </div> -->
+        </div>
 
-        <!-- <div class="clearfix grey"> -->
+        <div class="clearfix grey">
             <li id="[1,0]"></li>
             <li id="[1,1]"></li>
             <li id="[1,2]"></li>
@@ -394,9 +417,9 @@
             <li id="[1,6]"></li>
             <li id="[1,7]"></li>
             <li id="[1,8]"></li>
-        <!-- </div> -->
+        </div>
 
-        <!-- <div class="clearfix"> -->
+        <div class="clearfix">
             <li id="[2,0]"></li>
             <li id="[2,1]"></li>
             <li id="[2,2]"></li>
@@ -406,69 +429,80 @@
             <li id="[2,6]"></li>
             <li id="[2,7]"></li>
             <li id="[2,8]"></li>
-        <!-- </div> -->
+        </div>
 
-      <li id="[3,0]"></li>
-      <li id="[3,1]"></li>
-      <li id="[3,2]"></li>
-      <li id="[3,3]"></li>
-      <li id="[3,4]"></li>
-      <li id="[3,5]"></li>
-      <li id="[3,6]"></li>
-      <li id="[3,7]"></li>
-      <li id="[3,8]"></li>
+        <div class="clearfix grey">
+            <li id="[3,0]"></li>
+            <li id="[3,1]"></li>
+            <li id="[3,2]"></li>
+            <li id="[3,3]"></li>
+            <li id="[3,4]"></li>
+            <li id="[3,5]"></li>
+            <li id="[3,6]"></li>
+            <li id="[3,7]"></li>
+            <li id="[3,8]"></li>
+        </div>
+        <div>
+            <li id="[4,0]"></li>
+            <li id="[4,1]"></li>
+            <li id="[4,2]"></li>
+            <li id="[4,3]"></li>
+            <li id="[4,4]"></li>
+            <li id="[4,5]"></li>
+            <li id="[4,6]"></li>
+            <li id="[4,7]"></li>
+            <li id="[4,8]"></li>
+        </div>
 
-      <li id="[4,0]"></li>
-      <li id="[4,1]"></li>
-      <li id="[4,2]"></li>
-      <li id="[4,3]"></li>
-      <li id="[4,4]"></li>
-      <li id="[4,5]"></li>
-      <li id="[4,6]"></li>
-      <li id="[4,7]"></li>
-      <li id="[4,8]"></li>
-      
-      <li id="[5,0]"></li>
-      <li id="[5,1]"></li>
-      <li id="[5,2]"></li>
-      <li id="[5,3]"></li>
-      <li id="[5,4]"></li>
-      <li id="[5,5]"></li>
-      <li id="[5,6]"></li>
-      <li id="[5,7]"></li>
-      <li id="[5,8]"></li>
+        <div class="clearfix grey">
+            <li id="[5,0]"></li>
+            <li id="[5,1]"></li>
+            <li id="[5,2]"></li>
+            <li id="[5,3]"></li>
+            <li id="[5,4]"></li>
+            <li id="[5,5]"></li>
+            <li id="[5,6]"></li>
+            <li id="[5,7]"></li>
+            <li id="[5,8]"></li>
+        </div>
+          
+        <div>
+            <li id="[6,0]"></li>
+            <li id="[6,1]"></li>
+            <li id="[6,2]"></li>
+            <li id="[6,3]"></li>
+            <li id="[6,4]"></li>
+            <li id="[6,5]"></li>
+            <li id="[6,6]"></li>
+            <li id="[6,7]"></li>
+            <li id="[6,8]"></li>
+        </div>
 
-      <li id="[6,0]"></li>
-      <li id="[6,1]"></li>
-      <li id="[6,2]"></li>
-      <li id="[6,3]"></li>
-      <li id="[6,4]"></li>
-      <li id="[6,5]"></li>
-      <li id="[6,6]"></li>
-      <li id="[6,7]"></li>
-      <li id="[6,8]"></li>
+        <div class="clearfix grey">
+            <li id="[7,0]"></li>
+            <li id="[7,1]"></li>
+            <li id="[7,2]"></li>
+            <li id="[7,3]"></li>
+            <li id="[7,4]"></li>
+            <li id="[7,5]"></li>
+            <li id="[7,6]"></li>
+            <li id="[7,7]"></li>
+            <li id="[7,8]"></li>
+        </div>
+        
+        <div>
+            <li id="[8,0]"></li>
+            <li id="[8,1]"></li>
+            <li id="[8,2]"></li>
+            <li id="[8,3]"></li>
+            <li id="[8,4]"></li>
+            <li id="[8,5]"></li>
+            <li id="[8,6]"></li>
+            <li id="[8,7]"></li>
+            <li id="[8,8]"></li>
+        </div>
 
-      <li id="[7,0]"></li>
-      <li id="[7,1]"></li>
-      <li id="[7,2]"></li>
-      <li id="[7,3]"></li>
-      <li id="[7,4]"></li>
-      <li id="[7,5]"></li>
-      <li id="[7,6]"></li>
-      <li id="[7,7]"></li>
-      <li id="[7,8]"></li>
-
-      <li id="[8,0]"></li>
-      <li id="[8,1]"></li>
-      <li id="[8,2]"></li>
-      <li id="[8,3]"></li>
-      <li id="[8,4]"></li>
-      <li id="[8,5]"></li>
-      <li id="[8,6]"></li>
-      <li id="[8,7]"></li>
-      <li id="[8,8]"></li>
-
-    </ul>    
+    </ul>
     
 
     
