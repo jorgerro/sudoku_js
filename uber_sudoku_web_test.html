@@ -25,6 +25,12 @@
           color: #5a5a5a;
           line-height: normal;
         }
+        
+        .clearfix:after {
+          content: "";
+          display: block;
+          clear: both;
+        }
 
         ul {
           margin: 35px auto 0 auto;
@@ -69,11 +75,9 @@
         .highlight {
             background-color: #669999;
         }
-
-        .clearfix:after {
-          content: "";
-          display: block;
-          clear: both;
+        
+        .initial-board {
+            color: #D46A6A;
         }
 
     </style>
@@ -89,11 +93,6 @@
             
             var Sudoku = root.Sudoku = (root.Sudoku || {});
 
-            var Game = Sudoku.Game = function () {
-               this.selectedNumber = null;
-               this.board = constructBoard();
-            }
-            
             var GROUPS = Sudoku.GROUPS = {
                 
                 0: [[0,0], [0,1], [0,2], 
@@ -138,13 +137,68 @@
                  "0,0", "0,1","0,2",
                  "1,0", "1,1","1,2",
                  "2,0", "2,1","2,2"
-                
             ]
+            
+            var initialBoard = Sudoku.initialBoard = {
+                "0,0": 5, 
+                "0,1": 3, 
+                "0,4": 7, 
+                "1,0": 6, 
+                "1,3": 1, 
+                "1,4": 9, 
+                "1,5": 5, 
+                "2,1": 9, 
+                "2,2": 8, 
+                "2,7": 6,
+                       
+                "3,0": 8, 
+                "3,4": 6, 
+                "3,8": 3, 
+                "4,0": 4, 
+                "4,3": 8, 
+                "4,5": 3, 
+                "4,8": 1, 
+                "5,0": 7, 
+                "5,4": 2, 
+                "5,8": 6,
+                       
+                "6,1": 6, 
+                "6,6": 2, 
+                "6,7": 8,                
+                "7,3": 4, 
+                "7,4": 1, 
+                "7,5": 9, 
+                "7,8": 5, 
+                "8,4": 8, 
+                "8,7": 7, 
+                "8,8": 9
+            }
+            
+            // var intitialBoardValues = Sudoku.intitialBoardValues = [
+            //     5, 3, null, null, 7, null, null, null, null,
+            //     6, null, null, 1, 9, 5, null, null, null,
+            //     null, 9, 8, null, null, null, null, 6, null,
+            //
+            //     8, null, null, null, 6, null, null, null, 3,
+            //     4, null, null, 8, null, 3, null, null, 1,
+            //     7, null, null, null, 2, null, null, null, 6,
+            //
+            //     null, 6, null, null, null, null, 2, 8, null,
+            //     null, null, null, 4, 1, 9, null, null, 5,
+            //     null, null, null, null, 8, null, null, 7, 9
+            // ]
+            
+            var Game = Sudoku.Game = function () {
+               this.selectedNumber = null;
+               this.board = constructBoard();
+               this.initialBoard = initialBoard;
+            }
 
             var constructBoard = Sudoku.constructBoard = function constructBoard() {
              return _.times(9, function (i) {
                return _.times(9, function (j) {
-                 return null;
+                   var coordinateKey = [i, j].toString();
+                   return ( initialBoard[coordinateKey] )
                });
              });
             };
@@ -242,8 +296,6 @@
             };
             
             
-    
-            
         })(this);
         
     </script>
@@ -252,28 +304,46 @@
     
         $(document).ready(function () {
             
+            var game = new Sudoku.Game();
+            renderInitialBoard(game);
             
             $selectorElements = $('ul.clearfix.selector');
-            
-            $('ul.clearfix.board').on('click', 'li', function (event) {
-              
-              $(event.currentTarget).html(game.selectedNumber)
-              
-              var coord = eval($(this).attr('id'))
-              game.placeNumber(coord)
-            });
+            $boardElements = $('ul.clearfix.board');
             
             $selectorElements.on('click', 'li', function (event) {
-                $('ul.clearfix.selector li').removeClass('highlight')
-                $(event.currentTarget).addClass('highlight')
+                $('ul.clearfix.selector li').removeClass('highlight');
+                $(event.currentTarget).addClass('highlight');
                 
-                var selectedNumber = eval($(this).attr('id'))
-                game.setSelectedNumber(selectedNumber)
+                var selectedNumber = eval($(this).attr('id'));
+                game.setSelectedNumber(selectedNumber);
             });
             
-            var game = new Sudoku.Game();
-            console.log(Sudoku.findGroupNumber([0,0]));
-           
+            $boardElements.on('click', 'li', function (event) {
+                
+                var coordKey = $(event.currentTarget).attr('id').slice(1, -1);
+
+                if ( game.initialBoard[coordKey] ) {
+                    return;
+                }
+
+                $(event.currentTarget).html(game.selectedNumber);
+
+                var coord = eval($(this).attr('id'));
+                game.placeNumber(coord);
+            });
+            
+            function renderInitialBoard(game) {
+                var init = game.initialBoard;
+                for (var key in init) {
+                    if ( init.hasOwnProperty(key)) {
+                        var idString = '[' + key + ']';
+                        var el = document.getElementById(idString)
+                        el.innerHTML = init[key];
+                        el.className = el.className + " initial-board"
+                    }
+                }
+            };
+            
         });
       
     </script>
@@ -282,7 +352,6 @@
   <body>
     
     <h3>Uber Front-end Web Test</h3>
-    
     
     <ul class="clearfix selector">
         
