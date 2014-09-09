@@ -21,7 +21,6 @@
         }
         
         body {
-          background-color: #f7f7f7;
           background-color: #000;
           font-family: 'Montserrat', sans-serif;
           font-size: 24px;
@@ -36,18 +35,15 @@
         }
         
         section {
-            width: 630px;
+            width: 610px;
             margin: 60px auto 0 auto;
-/*            border: 1px solid red;*/
         }
 
         ul {
           list-style: none;
-/*          width: 150px;*/
-          width: 190px;
-/*          border: 1px solid black;*/
+          width: 170px;
           padding: 0;
-          margin:0;
+          margin: 0;
         }
         
         div {
@@ -63,6 +59,7 @@
         }
         
         .selector {
+            width: 170px;
             margin-top: -10px;
             float: right;
         }
@@ -76,12 +73,7 @@
           background-color: #FFF;
           color: #000;
         }
-        
-/*        ul li:hover {
-            -webkit-transition: 0.25s all ease-in-out;
-            background-color: #06D8FF;
-        }*/
-        
+
         .blue li {
             background-color: #1fbad6;
         }
@@ -95,19 +87,16 @@
             padding: 17px 15px 10px 15px;
         }
         
-        ul.board li {
+        .board li {
             position: relative;
             padding: 8px 5px 1px 5px;
         }
         
         .initial-board {
             color: #3B555B;
-/*            color: #31899A;*/
         }
         
         .selector li.highlight {
-            
-/*      background-color: #06D8FF;*/
             background-color: #FFF;
             color: #000;
         }
@@ -115,14 +104,15 @@
         span {
             position: absolute;
             top: 6px;
-            left: 16px;
+            left: 15px;
             font-size: 28px;
         }
         
         h3 {
+            color: #FFF;
             text-align: center;
             text-transform: uppercase;
-            color: #ccc;            
+            letter-spacing: 10px;          
         }
         
         li:hover {
@@ -130,6 +120,111 @@
             background-color: #06D8FF;
             cursor: pointer;
         }
+        
+        
+        
+        
+
+        @media only screen and (max-width: 480px) {
+            
+            section {
+/*                width: 610px;*/
+                width: 25%;
+/*                margin: 60px auto 0 auto;*/
+                margin: 10% auto 0 auto;
+            }
+
+            ul {
+              list-style: none;
+/*              width: 170px;*/
+              width: 27.9%;
+              padding: 0;
+              margin: 0;
+            }
+        
+            .board {
+/*                width: 435px;*/
+                width: 71.3%;
+                float: left;
+            }
+        
+            .selector {
+/*                width: 170px;*/
+                width: 27.8%;
+                margin-top: -10px;
+                float: right;
+            }
+            
+            div {
+                border: 1px solid #000;
+/*                width: 141px;*/
+                width: 32.4%;
+                display: block;
+                float: left;
+            }
+
+            li {
+              height: 35px;
+              width: 35px;
+              border: 1px solid black;
+              float: left;
+              text-align: center;
+              background-color: #FFF;
+              color: #000;
+            }
+
+            .blue li {
+                background-color: #1fbad6;
+            }
+        
+            .selector li {
+                background-color: #1fbad6;
+                color: #FFF;
+                margin: 13px 10px 13px 10px;
+                border: none;
+                border-radius: 3px;
+                padding: 17px 15px 10px 15px;
+            }
+        
+            .board li {
+                position: relative;
+                padding: 8px 5px 1px 5px;
+            }
+        
+            .initial-board {
+                color: #3B555B;
+            }
+        
+            .selector li.highlight {
+                background-color: #FFF;
+                color: #000;
+            }
+        
+            span {
+                position: absolute;
+                top: 6px;
+                left: 15px;
+                font-size: 28px;
+            }
+        
+            h3 {
+                color: #FFF;
+                text-align: center;
+                text-transform: uppercase;
+                letter-spacing: 10px;          
+            }
+        
+            li:hover {
+                -webkit-transition: 0.25s all ease-in-out;
+                background-color: #06D8FF;
+                cursor: pointer;
+            }
+            
+            
+            
+        }
+
+
 
     </style>
     
@@ -225,20 +320,6 @@
                 "8,8": 9
             }
             
-            // var intitialBoardValues = Sudoku.intitialBoardValues = [
-            //     5, 3, null, null, 7, null, null, null, null,
-            //     6, null, null, 1, 9, 5, null, null, null,
-            //     null, 9, 8, null, null, null, null, 6, null,
-            //
-            //     8, null, null, null, 6, null, null, null, 3,
-            //     4, null, null, 8, null, 3, null, null, 1,
-            //     7, null, null, null, 2, null, null, null, 6,
-            //
-            //     null, 6, null, null, null, null, 2, 8, null,
-            //     null, null, null, 4, 1, 9, null, null, 5,
-            //     null, null, null, null, 8, null, null, 7, 9
-            // ]
-            
             var Game = Sudoku.Game = function () {
                this.selectedNumber = undefined;
                this.board = constructBoard();
@@ -253,14 +334,6 @@
                });
              });
             };
-            
-            // var groupIncludes = Sudoku.groupIncludes = function groupIncludes(group, pos) {
-            //     group.forEach(function (groupPos) {
-            //         if ( groupPos[0] === pos[0] && groupPos[1] === pos[1] ) {
-            //             return true;
-            //         }
-            //     });
-            // }
             
             var findGroupNumber = Sudoku.findGroupNumber = function findGroupNumber(pos) {
                 
@@ -278,7 +351,6 @@
                     .compact()
                     .value();
                 
-                console.log(flattenedArray.length)
                 return flattenedArray.length === 81;
             }
             
@@ -298,7 +370,7 @@
               this.board[pos[0]][pos[1]] = this.selectedNumber;
               
               if ( this.isWon() ) {
-                  alert('You did it!')
+                  alert('You did it!');
               }
             };
             
@@ -339,10 +411,6 @@
             };
             
             Game.prototype.isValid = function (pos, num) {
-                console.log(pos, num)
-                console.log(this.checkRow(pos, num))
-                console.log(this.checkColumn(pos, num))
-                console.log(this.checkGroup(pos, num))
                 
                 if ( this.checkRow(pos, num) && this.checkColumn(pos, num) && this.checkGroup(pos, num) ) {
                     return true;
@@ -432,25 +500,9 @@
   </head>
   <body>
     
-    <h3>S u d o k u</h3>
+    <h3>sudoku</h3>
     
     <section class="clearfix">
-    
-        <ul class="clearfix selector">
-        
-            <li id="1">1</li>
-            <li id="2">2</li>
-            <li id="3">3</li>
-            <li id="4">4</li>
-            <li id="5">5</li>
-            <li id="6">6</li>
-            <li id="7">7</li>
-            <li id="8">8</li>
-            <li id="9">9</li>
-            <li id="">E</li>
-
-        </ul>
-
     
         <ul class="clearfix board">
         
@@ -561,6 +613,21 @@
                 <li id="[8,7]"></li>
                 <li id="[8,8]"></li>
             </div>
+
+        </ul>
+        
+        <ul class="clearfix selector">
+        
+            <li id="1">1</li>
+            <li id="2">2</li>
+            <li id="3">3</li>
+            <li id="4">4</li>
+            <li id="5">5</li>
+            <li id="6">6</li>
+            <li id="7">7</li>
+            <li id="8">8</li>
+            <li id="9">9</li>
+            <li id="">E</li>
 
         </ul>
 
