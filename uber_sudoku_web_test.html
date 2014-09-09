@@ -235,7 +235,8 @@
                     .flatten()
                     .compact()
                     .value();
-                    
+                
+                console.log(flattenedArray.length)
                 return flattenedArray.length === 81;
             }
             
@@ -254,7 +255,7 @@
             Game.prototype.placeNumber = function (pos) {
               this.board[pos[0]][pos[1]] = this.selectedNumber;
               
-              if ( this.isWon ) {
+              if ( this.isWon() ) {
                   alert('You did it!')
               }
             };
@@ -296,6 +297,10 @@
             };
             
             Game.prototype.isValid = function (pos, num) {
+                console.log(pos, num)
+                console.log(this.checkRow(pos, num))
+                console.log(this.checkColumn(pos, num))
+                console.log(this.checkGroup(pos, num))
                 
                 if ( this.checkRow(pos, num) && this.checkColumn(pos, num) && this.checkGroup(pos, num) ) {
                     return true;
@@ -401,6 +406,7 @@
         <li id="">E</li>
 
     </ul>
+
     
     <ul class="clearfix board">
         
@@ -408,33 +414,33 @@
             <li id="[0,0]"></li>
             <li id="[0,1]"></li>
             <li id="[0,2]"></li>
-            <li id="[0,3]"></li>
-            <li id="[0,4]"></li>
-            <li id="[0,5]"></li>
-            <li id="[0,6]"></li>
-            <li id="[0,7]"></li>
-            <li id="[0,8]"></li>
-        </div>
-
-        <div class="clearfix grey">
             <li id="[1,0]"></li>
             <li id="[1,1]"></li>
             <li id="[1,2]"></li>
-            <li id="[1,3]"></li>
-            <li id="[1,4]"></li>
-            <li id="[1,5]"></li>
-            <li id="[1,6]"></li>
-            <li id="[1,7]"></li>
-            <li id="[1,8]"></li>
-        </div>
-
-        <div class="clearfix">
             <li id="[2,0]"></li>
             <li id="[2,1]"></li>
             <li id="[2,2]"></li>
+        </div>
+
+        <div class="clearfix grey">
+            <li id="[0,3]"></li>
+            <li id="[0,4]"></li>
+            <li id="[0,5]"></li>
+            <li id="[1,3]"></li>
+            <li id="[1,4]"></li>
+            <li id="[1,5]"></li>
             <li id="[2,3]"></li>
             <li id="[2,4]"></li>
             <li id="[2,5]"></li>
+        </div>
+
+        <div class="clearfix">
+            <li id="[0,6]"></li>
+            <li id="[0,7]"></li>
+            <li id="[0,8]"></li>
+            <li id="[1,6]"></li>
+            <li id="[1,7]"></li>
+            <li id="[1,8]"></li>
             <li id="[2,6]"></li>
             <li id="[2,7]"></li>
             <li id="[2,8]"></li>
@@ -444,32 +450,33 @@
             <li id="[3,0]"></li>
             <li id="[3,1]"></li>
             <li id="[3,2]"></li>
-            <li id="[3,3]"></li>
-            <li id="[3,4]"></li>
-            <li id="[3,5]"></li>
-            <li id="[3,6]"></li>
-            <li id="[3,7]"></li>
-            <li id="[3,8]"></li>
-        </div>
-        <div>
             <li id="[4,0]"></li>
             <li id="[4,1]"></li>
             <li id="[4,2]"></li>
-            <li id="[4,3]"></li>
-            <li id="[4,4]"></li>
-            <li id="[4,5]"></li>
-            <li id="[4,6]"></li>
-            <li id="[4,7]"></li>
-            <li id="[4,8]"></li>
-        </div>
-
-        <div class="clearfix grey">
             <li id="[5,0]"></li>
             <li id="[5,1]"></li>
             <li id="[5,2]"></li>
+        </div>
+        
+        <div>
+            <li id="[3,3]"></li>
+            <li id="[3,4]"></li>
+            <li id="[3,5]"></li>
+            <li id="[4,3]"></li>
+            <li id="[4,4]"></li>
+            <li id="[4,5]"></li>
             <li id="[5,3]"></li>
             <li id="[5,4]"></li>
             <li id="[5,5]"></li>
+        </div>
+
+        <div class="clearfix grey">
+            <li id="[3,6]"></li>
+            <li id="[3,7]"></li>
+            <li id="[3,8]"></li>
+            <li id="[4,6]"></li>
+            <li id="[4,7]"></li>
+            <li id="[4,8]"></li>
             <li id="[5,6]"></li>
             <li id="[5,7]"></li>
             <li id="[5,8]"></li>
@@ -479,33 +486,33 @@
             <li id="[6,0]"></li>
             <li id="[6,1]"></li>
             <li id="[6,2]"></li>
-            <li id="[6,3]"></li>
-            <li id="[6,4]"></li>
-            <li id="[6,5]"></li>
-            <li id="[6,6]"></li>
-            <li id="[6,7]"></li>
-            <li id="[6,8]"></li>
-        </div>
-
-        <div class="clearfix grey">
             <li id="[7,0]"></li>
             <li id="[7,1]"></li>
             <li id="[7,2]"></li>
-            <li id="[7,3]"></li>
-            <li id="[7,4]"></li>
-            <li id="[7,5]"></li>
-            <li id="[7,6]"></li>
-            <li id="[7,7]"></li>
-            <li id="[7,8]"></li>
-        </div>
-        
-        <div>
             <li id="[8,0]"></li>
             <li id="[8,1]"></li>
             <li id="[8,2]"></li>
+        </div>
+
+        <div class="clearfix grey">
+            <li id="[6,3]"></li>
+            <li id="[6,4]"></li>
+            <li id="[6,5]"></li>
+            <li id="[7,3]"></li>
+            <li id="[7,4]"></li>
+            <li id="[7,5]"></li>
             <li id="[8,3]"></li>
             <li id="[8,4]"></li>
             <li id="[8,5]"></li>
+        </div>
+        
+        <div>
+            <li id="[6,6]"></li>
+            <li id="[6,7]"></li>
+            <li id="[6,8]"></li>
+            <li id="[7,6]"></li>
+            <li id="[7,7]"></li>
+            <li id="[7,8]"></li>
             <li id="[8,6]"></li>
             <li id="[8,7]"></li>
             <li id="[8,8]"></li>
