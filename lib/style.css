@@ -1,0 +1,228 @@
+html, body, ul, li, div, span {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+body {
+  background-color: #000;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 24px;
+  color: #5a5a5a;
+  line-height: normal;
+}
+
+.clearfix:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+section {
+    width: 610px;
+    margin: 60px auto 0 auto;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+div {
+    border: 1px solid #000;
+    display: block;
+    float: left;
+    width: 141px;
+}
+
+.board {
+    width: 435px;
+    float: left;
+}
+
+.selector {
+    width: 170px;
+    margin-top: -10px;
+    float: right;
+}
+
+li {
+  height: 35px;
+  width: 35px;
+  border: 1px solid black;
+  float: left;
+  text-align: center;
+  background-color: #FFF;
+  color: #000;
+}
+
+.blue li {
+    background-color: #1fbad6;
+}
+
+.selector li {
+    background-color: #1fbad6;
+    color: #FFF;
+    border: none;
+    border-radius: 3px;
+    padding: 17px 15px 10px 15px;
+    margin: 13px 10px 13px 10px;
+}
+
+.board li {
+    position: relative;
+    padding: 8px 5px 1px 5px;
+}
+
+.initial-board {
+    color: #3B555B;
+}
+
+.selector li.highlight {
+    background-color: #FFF;
+    color: #000;
+}
+
+span {
+    position: absolute;
+    top: 6px;
+    left: 15px;
+    font-size: 28px;
+}
+
+h3 {
+    color: #FFF;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 10px;
+}
+
+li:hover {
+    -webkit-transition: 0.25s all ease-in-out;
+    background-color: #06D8FF;
+    cursor: pointer;
+}
+
+
+@media only screen and (max-width: 650px) {
+
+    .board {
+        float: none;
+        margin: 0 auto 0 auto;
+    }
+
+    .selector {
+        width: 425px;
+        float: none;
+        margin: 5px auto 0 auto;
+    }       
+    
+}
+
+
+@media only screen and (max-width: 480px) and (orientation: portrait) {
+    
+    body {
+        font-size: 18px;
+    }
+
+    section {
+        width: 100%;
+        margin: 10% auto 0 auto;
+    }
+
+    .board {
+        width: 294px;
+        float: none;
+        margin: 0 auto 0 auto;
+    }
+
+    .selector {
+        width: 310px;
+        float: none;
+        margin: 5px auto 0 auto;
+    }
+    
+    div {
+        width: 96px;
+    }
+
+    li {
+      height: 20px;
+      width: 20px;
+    }
+
+    .blue li {
+        background-color: #1fbad6;
+    }
+
+    .selector li {
+        padding: 13px 13px 13px 13px;
+        margin: 10px 8px 5px 8px;
+    }
+
+    .board li {
+        padding: 5px 5px 5px 5px;
+    }
+
+    span {
+        top: 0px;
+        left: 8px;
+    }
+    
+}
+
+
+@media only screen and (max-width: 480px) and (orientation: landscape) {
+    
+    body {
+        font-size: 18px;
+    }
+
+    section {
+        width: 100%;
+        margin: 8% auto 0 auto;
+    }
+
+    .board {
+        width: 294px;
+        float: left;
+    }
+
+    .selector {
+        width: 170px;
+        float: right;
+    }
+    
+    div {
+        width: 96px;
+    }
+
+    li {
+      height: 20px;
+      width: 20px;
+    }
+
+    .blue li {
+        background-color: #1fbad6;
+    }
+
+    .selector li {
+        padding: 13px 13px 13px 13px;
+        margin: 10px 8px 5px 8px;
+    }
+
+    .board li {
+        padding: 5px 5px 5px 5px;
+    }
+
+    span {
+        top: 0px;
+        left: 8px;
+    }
+
+}
+
