@@ -139,6 +139,7 @@ li:hover {
     }
 
     .selector {
+        margin-top: 1px;
         width: 170px;
         float: right;
         margin-top: -10px;
