@@ -45,19 +45,19 @@
           padding: 0;
           margin: 0;
         }
-        
+
         div {
             border: 1px solid #000;
             width: 141px;
             display: block;
             float: left;
         }
-        
+
         .board {
             width: 435px;
             float: left;
         }
-        
+
         .selector {
             width: 170px;
             margin-top: -10px;
@@ -77,7 +77,7 @@
         .blue li {
             background-color: #1fbad6;
         }
-        
+
         .selector li {
             background-color: #1fbad6;
             color: #FFF;
@@ -86,47 +86,59 @@
             border-radius: 3px;
             padding: 17px 15px 10px 15px;
         }
-        
+
         .board li {
             position: relative;
             padding: 8px 5px 1px 5px;
         }
-        
+
         .initial-board {
             color: #3B555B;
         }
-        
+
         .selector li.highlight {
             background-color: #FFF;
             color: #000;
         }
-        
+
         span {
             position: absolute;
             top: 6px;
             left: 15px;
             font-size: 28px;
         }
-        
+
         h3 {
             color: #FFF;
             text-align: center;
             text-transform: uppercase;
-            letter-spacing: 10px;          
+            letter-spacing: 10px;
         }
-        
+
         li:hover {
             -webkit-transition: 0.25s all ease-in-out;
             background-color: #06D8FF;
             cursor: pointer;
         }
-        
-        
-        
-        
 
+    
+        
+        
+        
+        
+        
+/* BEGIN MOBILE TEST */        
+        
+        
+/* END MOBILE TEST */
+        
+        
         @media only screen and (max-width: 480px) {
             
+            body {
+                font-size: 18px;
+            }
+        
             section {
 /*                width: 610px;*/
                 width: 100%;
@@ -144,29 +156,36 @@
         
             .board {
 /*                width: 435px;*/
-                width: 71.3%;
-                float: left;
+                width: 339px;
+/*                width: 71.3%;*/
+                float: none;
+                margin: 10% auto 0 auto;
             }
         
             .selector {
-/*                width: 170px;*/
-                width: 28%;
-                margin-top: -10px;
-                float: right;
+                width: 170px;
+/*                width: 28%;*/
+                float: none;
+                margin: 5px auto 0 auto;
+            }
+            
+            .selector {
+                width: 335px;
             }
             
             div {
                 border: 1px solid #000;
 /*                width: 141px;*/
-                width: 32.4%;
+                width: 111px;
+/*                width: 32.4%;*/
                 display: block;
                 float: left;
             }
 
             li {
-              height: 35px;
+              height: 25px;
 /*              height: 23.1%;*/
-              width: 35px;
+              width: 25px;
 /*              width: 23.1%;*/
               border: 1px solid black;
               float: left;
@@ -182,17 +201,17 @@
             .selector li {
                 background-color: #1fbad6;
                 color: #FFF;
-                margin: 13px 10px 13px 10px;
-/*                margin: 7.6% 5.8% 7.6% 5.8%;*/
                 border: none;
                 border-radius: 3px;
-                padding: 17px 15px 10px 15px;
+                padding: 15px 13px 8px 13px;
 /*                padding: 10% 8.8% 5.8% 8.8%;*/
+                margin: 10px 8px 10px 8px;
+/*                margin: 7.6% 5.8% 7.6% 5.8%;*/
             }
         
             .board li {
                 position: relative;
-                padding: 8px 5px 1px 5px;
+                padding: 7px 5px 2px 5px;
 /*                padding: 1.8% 1.1% 0.2% 1.15%;*/
             }
         
@@ -230,6 +249,9 @@
             
             
         }
+        
+        
+        
 
 
 
