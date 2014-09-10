@@ -21,7 +21,7 @@ body {
 }
 
 section {
-    width: 610px;
+    width: 620px;
     margin: 60px auto 0 auto;
 }
 
@@ -41,11 +41,11 @@ div {
 .board {
     width: 435px;
     float: left;
+    margin-top: 10px;
 }
 
 .selector {
     width: 170px;
-    margin-top: -10px;
     float: right;
 }
 
@@ -122,6 +122,55 @@ li:hover {
     
 }
 
+@media only screen and (max-width: 480px) and (orientation: landscape) {
+    
+    body {
+        font-size: 18px;
+    }
+
+    section {
+        width: 100%;
+        margin: 8% auto 0 auto;
+    }
+
+    .board {
+        width: 294px;
+        float: left;
+    }
+
+    .selector {
+        width: 170px;
+        float: right;
+    }
+    
+    div {
+        width: 96px;
+    }
+
+    li {
+      height: 20px;
+      width: 20px;
+    }
+
+    .blue li {
+        background-color: #1fbad6;
+    }
+
+    .selector li {
+        padding: 13px 13px 13px 13px;
+        margin: 10px 8px 5px 8px;
+    }
+
+    .board li {
+        padding: 5px 5px 5px 5px;
+    }
+
+    span {
+        top: 0px;
+        left: 8px;
+    }
+
+}
 
 @media only screen and (max-width: 480px) and (orientation: portrait) {
     
@@ -174,55 +223,3 @@ li:hover {
     }
     
 }
-
-
-@media only screen and (max-width: 480px) and (orientation: landscape) {
-    
-    body {
-        font-size: 18px;
-    }
-
-    section {
-        width: 100%;
-        margin: 8% auto 0 auto;
-    }
-
-    .board {
-        width: 294px;
-        float: left;
-    }
-
-    .selector {
-        width: 170px;
-        float: right;
-    }
-    
-    div {
-        width: 96px;
-    }
-
-    li {
-      height: 20px;
-      width: 20px;
-    }
-
-    .blue li {
-        background-color: #1fbad6;
-    }
-
-    .selector li {
-        padding: 13px 13px 13px 13px;
-        margin: 10px 8px 5px 8px;
-    }
-
-    .board li {
-        padding: 5px 5px 5px 5px;
-    }
-
-    span {
-        top: 0px;
-        left: 8px;
-    }
-
-}
-
